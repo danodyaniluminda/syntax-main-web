@@ -1,0 +1,151 @@
+<section class="section code-bg">
+  <div class="container">
+    <div class="section-enter" [@slideInUp]="isVisible">
+      
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">
+          Our Services
+        </h2>
+        <p class="section-subtitle">
+          Comprehensive software development services tailored to your business needs.
+        </p>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="services-grid" [@staggerServices]="isVisible">
+        <div 
+          *ngFor="let service of services; let i = index; trackBy: trackByTitle"
+          class="service-card glass-effect"
+          [class.selected]="isServiceSelected(service)"
+          (click)="selectService(service)"
+          (mouseenter)="onServiceHover(service, true)"
+          (mouseleave)="onServiceHover(service, false)"
+          [@slideInUp]="{ delay: (i * 0.15) + 's' }"
+        >
+          <!-- Service Header -->
+          <div class="service-header">
+            <div class="service-icon" [@iconScale] [style.color]="service.color">
+              <i [class]="service.icon"></i>
+            </div>
+            <h3 class="service-title">{{ service.title }}</h3>
+          </div>
+          
+          <!-- Service Description -->
+          <p class="service-description">{{ service.description }}</p>
+          
+          <!-- Service Features -->
+          <div class="service-features">
+            <h4 class="features-title">Key Features:</h4>
+            <ul class="features-list">
+              <li *ngFor="let feature of service.features" class="feature-item">
+                <i class="fas fa-check" [style.color]="service.color"></i>
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Technologies Used -->
+          <div class="service-technologies">
+            <span 
+              *ngFor="let tech of service.technologies" 
+              class="tech-tag"
+              [style.border-color]="service.color"
+              [style.color]="service.color"
+            >
+              {{ tech }}
+            </span>
+          </div>
+          
+          <!-- Service Decoration -->
+          <div class="service-decoration" [style.background]="getServiceGradient(service)"></div>
+          
+          <!-- Expand/Collapse Indicator -->
+          <div class="service-expand-indicator" [style.color]="service.color">
+            <i class="fas" [class.fa-plus]="!isServiceSelected(service)" [class.fa-minus]="isServiceSelected(service)"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Development Process -->
+      <div class="process-section" [@slideInUp]="{ delay: '1.0s' }">
+        <div class="process-header">
+          <h3 class="process-title">Our Development Process</h3>
+          <p class="process-subtitle">A proven methodology that ensures project success</p>
+        </div>
+
+        <div class="process-timeline">
+          <div 
+            *ngFor="let step of processSteps; let i = index; trackBy: trackByStep"
+            class="process-step"
+            [@slideInUp]="{ delay: (1.2 + i * 0.1) + 's' }"
+          >
+            <div class="step-number">{{ step.step }}</div>
+            <div class="step-content glass-effect">
+              <div class="step-icon">
+                <i [class]="step.icon"></i>
+              </div>
+              <h4 class="step-title">{{ step.title }}</h4>
+              <p class="step-description">{{ step.description }}</p>
+              <div class="step-duration">
+                <i class="fas fa-clock"></i>
+                {{ step.duration }}
+              </div>
+            </div>
+            
+            <!-- Process connector -->
+            <div class="process-connector" *ngIf="i < processSteps.length - 1">
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Why Choose Us -->
+      <div class="advantages-section" [@slideInUp]="{ delay: '1.6s' }">
+        <div class="advantages-header">
+          <h3 class="advantages-title">Why Choose SyntaxEra?</h3>
+          <p class="advantages-subtitle">Benefits that set us apart from the competition</p>
+        </div>
+
+        <div class="advantages-grid">
+          <div 
+            *ngFor="let advantage of advantages; let i = index; trackBy: trackByTitle"
+            class="advantage-card glass-effect hover-glow"
+            [@slideInUp]="{ delay: (1.8 + i * 0.1) + 's' }"
+          >
+            <div class="advantage-icon">
+              <i [class]="advantage.icon"></i>
+            </div>
+            <h4 class="advantage-title">{{ advantage.title }}</h4>
+            <p class="advantage-description">{{ advantage.description }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="cta-section" [@slideInUp]="{ delay: '2.2s' }">
+        <div class="cta-content glass-effect">
+          <div class="cta-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3 class="cta-title">Ready to Start Your Project?</h3>
+          <p class="cta-description">
+            Let's discuss how we can help transform your ideas into exceptional digital solutions.
+          </p>
+          <div class="cta-buttons">
+            <button class="btn btn-primary" (click)="onGetQuote()">
+              <i class="fas fa-comment-dots"></i>
+              Get Free Quote
+            </button>
+            <button class="btn btn-outline" (click)="onViewPortfolio()">
+              <i class="fas fa-eye"></i>
+              View Our Work
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

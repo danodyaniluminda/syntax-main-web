@@ -1,0 +1,161 @@
+<section class="section gradient-bg-alt">
+  <div class="container">
+    <div class="section-enter" [@slideInUp]="isVisible">
+      
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">
+          Technologies We Master
+        </h2>
+        <p class="section-subtitle">
+          We leverage the latest technologies to build powerful, scalable, and maintainable solutions.
+        </p>
+      </div>
+
+      <!-- Technology Statistics -->
+      <div class="tech-stats" [@slideInUp]="{ delay: '0.2s' }">
+        <div class="stats-grid">
+          <div 
+            *ngFor="let stat of stats; let i = index; trackBy: trackByName"
+            class="stat-item glass-effect"
+            [@slideInUp]="{ delay: (0.3 + i * 0.1) + 's' }"
+          >
+            <div class="stat-number">{{ getFormattedStat(stat) }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Navigation -->
+      <div class="category-nav" [@slideInUp]="{ delay: '0.6s' }">
+        <button 
+          *ngFor="let category of technologyCategories; trackBy: trackByCategory"
+          class="category-btn"
+          [class.active]="isCategorySelected(category)"
+          (click)="selectCategory(category)"
+          [style.border-color]="isCategorySelected(category) ? category.color : 'transparent'"
+        >
+          <i [class]="category.icon" [style.color]="category.color"></i>
+          <span>{{ category.name }}</span>
+        </button>
+      </div>
+
+      <!-- Selected Category Details -->
+      <div class="category-details" [@slideInUp]="{ delay: '0.8s' }" *ngIf="selectedCategory">
+        <div class="category-header">
+          <div class="category-info">
+            <div class="category-icon" [style.color]="selectedCategory.color">
+              <i [class]="selectedCategory.icon"></i>
+            </div>
+            <div class="category-text">
+              <h3 class="category-title">{{ selectedCategory.name }}</h3>
+              <p class="category-description">{{ selectedCategory.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technologies Grid -->
+        <div class="technologies-grid" [@staggerTech]="selectedCategory">
+          <div 
+            *ngFor="let tech of selectedCategory.technologies; let i = index; trackBy: trackByName"
+            class="tech-card glass-effect hover-glow"
+            (mouseenter)="onTechHover(tech, true)"
+            (mouseleave)="onTechHover(tech, false)"
+            [@techHover]="getTechHoverState(tech)"
+          >
+            <!-- Technology Icon -->
+            <div class="tech-icon" [style.color]="tech.color">
+              <i [class]="tech.icon"></i>
+            </div>
+            
+            <!-- Technology Name -->
+            <h4 class="tech-name">{{ tech.name }}</h4>
+            
+            <!-- Proficiency Bar -->
+            <div class="proficiency-section">
+              <div class="proficiency-label">
+                <span>Proficiency</span>
+                <span class="proficiency-percentage">{{ tech.proficiency }}%</span>
+              </div>
+              <div class="proficiency-bar">
+                <div 
+                  class="proficiency-fill"
+                  [style.width]="getProficiencyWidth(tech.proficiency)"
+                  [style.background-color]="getProficiencyColor(tech.proficiency)"
+                ></div>
+              </div>
+            </div>
+            
+            <!-- Hover Effect Overlay -->
+            <div class="tech-overlay" [style.background]="tech.color"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- All Technologies Overview -->
+      <div class="all-technologies" [@slideInUp]="{ delay: '1.2s' }">
+        <div class="overview-header">
+          <h3 class="overview-title">Complete Technology Stack</h3>
+          <p class="overview-subtitle">
+            Our comprehensive expertise across {{ getTotalTechnologies() }} technologies with 
+            {{ getAverageProficiency() }}% average proficiency
+          </p>
+        </div>
+
+        <div class="tech-overview-grid">
+          <div 
+            *ngFor="let category of technologyCategories; let i = index; trackBy: trackByCategory"
+            class="tech-category-overview glass-effect"
+            [@slideInUp]="{ delay: (1.4 + i * 0.1) + 's' }"
+          >
+            <div class="category-overview-header">
+              <div class="category-overview-icon" [style.color]="category.color">
+                <i [class]="category.icon"></i>
+              </div>
+              <h4 class="category-overview-title">{{ category.name }}</h4>
+            </div>
+            
+            <div class="category-tech-list">
+              <span 
+                *ngFor="let tech of category.technologies; trackBy: trackByName"
+                class="tech-mini-tag"
+                [style.border-color]="tech.color"
+                [style.color]="tech.color"
+              >
+                {{ tech.name }}
+              </span>
+            </div>
+            
+            <div class="category-count">
+              {{ category.technologies.length }} Technologies
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="tech-cta" [@slideInUp]="{ delay: '1.8s' }">
+        <div class="cta-content glass-effect">
+          <div class="cta-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3 class="cta-title">Ready to Build with Modern Tech?</h3>
+          <p class="cta-description">
+            Let's leverage our technical expertise to create exceptional solutions for your business.
+          </p>
+          <div class="cta-buttons">
+            <button class="btn btn-primary" (click)="onStartProject()">
+              <i class="fas fa-play"></i>
+              Start Your Project
+            </button>
+            <button class="btn btn-outline" (click)="onViewProjects()">
+              <i class="fas fa-eye"></i>
+              See Our Work
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+/* Global App Styles */
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading states */
+.loaded {
+  .section-enter {
+    transition-delay: 0.2s;
+  }
+}
+
+/* Animation for Angular route transitions */
+.route-animation {
+  position: relative;
+  overflow: hidden;
+}

@@ -1,0 +1,190 @@
+<footer class="footer">
+  <div class="container">
+    
+    <!-- Main Footer Content -->
+    <div class="footer-main">
+      <div class="footer-grid">
+        
+        <!-- Company Info -->
+        <div class="footer-section">
+          <div class="footer-logo" (click)="scrollToTop()" tabindex="0" (keydown)="onKeyDown($event, scrollToTop)">
+            <div class="footer-logo-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <span class="footer-logo-text">SyntaxEra</span>
+          </div>
+          <p class="footer-tagline">Beyond the Barracks</p>
+          <p class="footer-description">
+            Pioneering software solutions that transcend conventional boundaries. 
+            We craft digital experiences that drive innovation and transform businesses.
+          </p>
+          
+          <!-- Company Stats -->
+          <div class="company-stats">
+            <div 
+              *ngFor="let stat of companyStats; trackBy: trackByLabel"
+              class="stat-item"
+            >
+              <div class="stat-value">{{ stat.value }}</div>
+              <div class="stat-label">{{ stat.label }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-section">
+          <h4 class="footer-title">Quick Links</h4>
+          <div class="footer-links">
+            <a 
+              *ngFor="let link of navigationLinks; trackBy: trackByLabel"
+              class="footer-link"
+              (click)="scrollToSection(link.href)"
+              tabindex="0"
+              (keydown)="handleLinkKeyDown($event, link.href)"
+
+            >
+              {{ link.label }}
+            </a>
+          </div>
+        </div>
+        
+        <!-- Services -->
+        <div class="footer-section">
+          <h4 class="footer-title">Our Services</h4>
+          <div class="footer-links">
+            <a 
+              *ngFor="let service of services; trackBy: trackByLabel"
+              class="footer-link"
+              (click)="scrollToSection(service.href)"
+              tabindex="0"
+              (keydown)="handleLinkKeyDown($event, service.href)"
+
+            >
+              {{ service.label }}
+            </a>
+          </div>
+        </div>
+        
+        <!-- Contact & Newsletter -->
+        <div class="footer-section">
+          <h4 class="footer-title">Stay Connected</h4>
+          
+          <!-- Contact Information -->
+          <div class="contact-info">
+            <div class="contact-item" (click)="onViewLocation()" tabindex="0" (keydown)="onKeyDown($event, onViewLocation)">
+              <i class="fas fa-map-marker-alt"></i>
+              <div class="contact-text">
+                <div>{{ contactInfo.address.street }}</div>
+                <div>{{ contactInfo.address.city }}</div>
+              </div>
+            </div>
+            
+            <div class="contact-item" (click)="onCallPhone()" tabindex="0" (keydown)="onKeyDown($event, onCallPhone)">
+              <i class="fas fa-phone"></i>
+              <div class="contact-text">{{ contactInfo.phone }}</div>
+            </div>
+            
+            <div class="contact-item" (click)="onSendEmail('general')" tabindex="0" (keydown)="handleSendEmailKeyDown($event)">
+              <i class="fas fa-envelope"></i>
+              <div class="contact-text">{{ contactInfo.email }}</div>
+            </div>
+          </div>
+          
+          <!-- Newsletter Subscription -->
+          <div class="newsletter-section">
+            <h5 class="newsletter-title">Newsletter</h5>
+            <p class="newsletter-description">Subscribe to get our latest updates and insights.</p>
+            
+            <form class="newsletter-form" (submit)="onNewsletterSubmit()" (ngSubmit)="onNewsletterSubmit()">
+              <div class="newsletter-input-group">
+                <input
+                  type="email"
+                  [(ngModel)]="newsletterEmail"
+                  name="newsletter-email"
+                  placeholder="Enter your email"
+                  class="newsletter-input"
+                  [disabled]="isSubscribing"
+                  required
+                >
+                <button 
+                  type="submit" 
+                  class="newsletter-btn"
+                  [disabled]="isSubscribing || !newsletterEmail.trim()"
+                  [class.loading]="isSubscribing"
+                >
+                  <i *ngIf="!isSubscribing" class="fas fa-paper-plane"></i>
+                  <i *ngIf="isSubscribing" class="fas fa-spinner fa-spin"></i>
+                </button>
+              </div>
+              
+              <!-- Subscription Message -->
+              <div 
+                *ngIf="subscriptionMessage" 
+                class="subscription-message"
+                [class.success]="subscriptionMessage.includes('Thank you')"
+                [class.error]="!subscriptionMessage.includes('Thank you')"
+              >
+                {{ subscriptionMessage }}
+              </div>
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Social Media & Bottom -->
+    <div class="footer-bottom">
+      
+      <!-- Social Media Links -->
+      <div class="social-section">
+        <h4 class="social-title">Follow Us</h4>
+        <div class="social-links">
+          <a 
+            *ngFor="let social of socialLinks; trackBy: trackByName"
+            class="social-link"
+            [title]="social.name"
+            (click)="openSocialLink(social.url, social.name)"
+            tabindex="0"
+            (keydown)="handleSocialLinkKeyDown($event, social.url, social.name)"
+
+
+          >
+            <i [class]="social.icon" [style.color]="social.color"></i>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Copyright -->
+      <div class="copyright-section">
+        <div class="copyright-text">
+          <p>
+            © {{ getCurrentYear() }} SyntaxEra. All rights reserved. 
+            Built with <i class="fas fa-heart text-red-500"></i> and lots of ☕
+          </p>
+        </div>
+        
+        <!-- Legal Links -->
+        <div class="legal-links">
+          <a href="#" class="legal-link">Privacy Policy</a>
+          <span class="separator">|</span>
+          <a href="#" class="legal-link">Terms of Service</a>
+          <span class="separator">|</span>
+          <a href="#" class="legal-link">Cookie Policy</a>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button 
+      class="back-to-top"
+      (click)="scrollToTop()"
+      title="Back to top"
+      aria-label="Scroll to top of page"
+    >
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    
+  </div>
+</footer>

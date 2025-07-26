@@ -1,0 +1,145 @@
+<section class="section gradient-bg-alt">
+  <div class="container">
+    <div class="section-enter" [@slideInUp]>
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">
+          Let's Build Something Amazing
+        </h2>
+        <p class="section-subtitle">
+          Ready to transform your ideas into reality? Get in touch with our team.
+        </p>
+      </div>
+
+      <!-- Contact Content -->
+      <div class="contact-grid">
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <div 
+            *ngFor="let info of contactInfo; let i = index" 
+            class="contact-item"
+            [@slideInUp]="{ delay: (i * 0.2) + 's' }"
+          >
+            <div class="contact-icon">
+              <i [class]="info.icon"></i>
+            </div>
+            <div class="contact-content">
+              <h3>{{ info.title }}</h3>
+              <p [innerHTML]="info.content"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form 
+          [formGroup]="contactForm" 
+          (ngSubmit)="onSubmit()"
+          class="contact-form glass-effect card"
+          [@slideInUp]="{ delay: '0.6s' }"
+          [@shake]="shakeState"
+          novalidate
+        >
+          <!-- Name Field -->
+          <div class="form-group">
+            <label class="form-label" for="name">
+              Name *
+            </label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-input"
+              [class.error]="hasError('name')"
+              (blur)="onFieldBlur('name')"
+              placeholder="Enter your full name"
+              autocomplete="name"
+            >
+            <div 
+              *ngIf="hasError('name')" 
+              class="form-error"
+              [@slideInUp]
+            >
+              {{ getErrorMessage('name') }}
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <label class="form-label" for="email">
+              Email *
+            </label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-input"
+              [class.error]="hasError('email')"
+              (blur)="onFieldBlur('email')"
+              placeholder="Enter your email address"
+              autocomplete="email"
+            >
+            <div 
+              *ngIf="hasError('email')" 
+              class="form-error"
+              [@slideInUp]
+            >
+              {{ getErrorMessage('email') }}
+            </div>
+          </div>
+
+          <!-- Message Field -->
+          <div class="form-group">
+            <div class="message-header">
+              <label class="form-label" for="message">
+                Message *
+              </label>
+              <span 
+                class="character-count"
+                [class.near-limit]="isMessageNearLimit()"
+              >
+                {{ getMessageCharacterCount() }}
+              </span>
+            </div>
+            <textarea
+              id="message"
+              formControlName="message"
+              class="form-input form-textarea"
+              [class.error]="hasError('message')"
+              (blur)="onFieldBlur('message')"
+              placeholder="Tell us about your project..."
+              rows="5"
+            ></textarea>
+            <div 
+              *ngIf="hasError('message')" 
+              class="form-error"
+              [@slideInUp]
+            >
+              {{ getErrorMessage('message') }}
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            class="btn btn-primary w-full"
+            [disabled]="isSubmitting"
+            [class.loading]="isSubmitting"
+          >
+            <span *ngIf="!isSubmitting">Send Message</span>
+            <span *ngIf="isSubmitting" class="loading-content">
+              <i class="fas fa-spinner fa-spin"></i>
+              Sending...
+            </span>
+          </button>
+
+          <!-- Form Status -->
+          <div class="form-status" *ngIf="contactForm.dirty && !contactForm.valid">
+            <small class="text-error">
+              Please correct the errors above and try again.
+            </small>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

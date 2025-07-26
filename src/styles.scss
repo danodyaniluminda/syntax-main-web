@@ -1,0 +1,411 @@
+/* You can add global styles to this file, and also import other style files */
+/* Global Styles for SyntaxEra Angular App */
+
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap');
+
+// Import shared styles
+@import 'app/components/shared/styles/variables';
+@import 'app/components/shared/styles/mixins';
+
+// ===== RESET & BASE STYLES =====
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary) 50%, var(--gray-900) 100%);
+  color: white;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+// ===== GLOBAL UTILITY CLASSES =====
+.container {
+  @include container();
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+.hidden { display: none !important; }
+.block { display: block; }
+.inline-block { display: inline-block; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+// Spacing utilities
+@for $i from 1 through 20 {
+  .m-#{$i} { margin: #{$i * 0.25}rem; }
+  .mt-#{$i} { margin-top: #{$i * 0.25}rem; }
+  .mb-#{$i} { margin-bottom: #{$i * 0.25}rem; }
+  .ml-#{$i} { margin-left: #{$i * 0.25}rem; }
+  .mr-#{$i} { margin-right: #{$i * 0.25}rem; }
+  .mx-#{$i} { 
+    margin-left: #{$i * 0.25}rem; 
+    margin-right: #{$i * 0.25}rem; 
+  }
+  .my-#{$i} { 
+    margin-top: #{$i * 0.25}rem; 
+    margin-bottom: #{$i * 0.25}rem; 
+  }
+  
+  .p-#{$i} { padding: #{$i * 0.25}rem; }
+  .pt-#{$i} { padding-top: #{$i * 0.25}rem; }
+  .pb-#{$i} { padding-bottom: #{$i * 0.25}rem; }
+  .pl-#{$i} { padding-left: #{$i * 0.25}rem; }
+  .pr-#{$i} { padding-right: #{$i * 0.25}rem; }
+  .px-#{$i} { 
+    padding-left: #{$i * 0.25}rem; 
+    padding-right: #{$i * 0.25}rem; 
+  }
+  .py-#{$i} { 
+    padding-top: #{$i * 0.25}rem; 
+    padding-bottom: #{$i * 0.25}rem; 
+  }
+}
+
+.rounded { border-radius: var(--radius-sm); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+.border { border: 1px solid; }
+.border-2 { border: 2px solid; }
+
+.transition-all { transition: var(--transition); }
+
+// ===== BACKGROUND CLASSES =====
+.gradient-bg {
+  background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary) 50%, var(--gray-900) 100%);
+}
+
+.gradient-bg-alt {
+  background: linear-gradient(45deg, var(--secondary) 0%, var(--gray-900) 100%);
+}
+
+.code-bg {
+  background: linear-gradient(135deg, $code-bg-primary, $code-bg-secondary);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: grid-move 20s linear infinite;
+    pointer-events: none;
+  }
+}
+
+// ===== TYPOGRAPHY CLASSES =====
+.text-gradient {
+  @include text-gradient();
+}
+
+@each $size, $value in $font-sizes {
+  .text-#{$size} { font-size: $value; }
+}
+
+@each $weight, $value in $font-weights {
+  $font-weights: (
+  light: 300,
+  normal: 400,
+  bold: 700,
+  "black": 900
+);
+
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
+}
+
+.leading-tight { line-height: map-get($line-heights, tight); }
+.leading-normal { line-height: map-get($line-heights, normal); }
+.leading-relaxed { line-height: map-get($line-heights, relaxed); }
+
+// ===== COMPONENT CLASSES =====
+.glass-effect {
+  @include glass-effect();
+}
+
+.card {
+  @include card-base();
+}
+
+.section {
+  @include section-spacing();
+}
+
+.section-title {
+  @include section-title();
+}
+
+.section-subtitle {
+  @include section-subtitle();
+}
+
+// .section-enter {
+//   opacity: 0;
+//   transform: translateY(50px);
+//   transition: all 0.6s ease-out;
+  
+//   &.visible {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
+
+// ===== BUTTON STYLES =====
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius);
+  font-weight: map-get($font-weights, semibold);
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: map-get($font-sizes, base);
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.btn-primary {
+  @include button-gradient();
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  
+  &:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+  }
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  border: none;
+  
+  &:hover {
+    background: rgba(139, 92, 246, 0.1);
+  }
+}
+
+// ===== FORM STYLES =====
+.form-group {
+  margin-bottom: var(--space-6);
+}
+
+.form-label {
+  @include form-label();
+}
+
+.form-input {
+  @include form-input-base();
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-error {
+  @include form-error();
+}
+
+// ===== ANIMATION CLASSES =====
+.animate-float {
+  @include float();
+}
+
+.animate-pulse {
+  @include pulse();
+}
+
+.animate-slide-up {
+  @include fade-in-up();
+}
+
+.hover-glow {
+  @include hover-glow();
+}
+
+// ===== KEYFRAMES =====
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, 20px); }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--primary); }
+}
+
+// ===== ACCESSIBILITY =====
+@include reduce-motion() {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.sr-only {
+  @include visually-hidden();
+}
+
+*:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.btn:focus,
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+// ===== LOADING STATES =====
+.loading {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ===== PRINT STYLES =====
+@include print-only() {
+  .navbar,
+  .hero-code-bg,
+  .floating-code {
+    display: none;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .section {
+    page-break-inside: avoid;
+  }
+}
+
+// ===== RESPONSIVE UTILITIES =====
+@include respond-below(md) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: block !important; }
+}
+
+@include respond-to(md) {
+  .hide-desktop { display: none !important; }
+  .show-desktop { display: block !important; }
+}

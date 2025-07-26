@@ -1,0 +1,111 @@
+<section class="section gradient-bg-alt">
+  <div class="container">
+    <div class="section-enter" [@slideInUp]="isVisible">
+      
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">
+          About SyntaxEra
+        </h2>
+        <p class="section-subtitle">
+          We are a cutting-edge software development company that goes beyond traditional boundaries to deliver exceptional digital solutions.
+        </p>
+      </div>
+
+      <!-- Company Features -->
+      <div class="features-grid" [@staggerCards]="isVisible">
+        <div 
+          *ngFor="let feature of features; let i = index; trackBy: trackByIndex"
+          class="feature-card glass-effect card hover-glow"
+          (mouseenter)="onCardHover(i, true)"
+          (mouseleave)="onCardHover(i, false)"
+          [@slideInUp]="{ delay: (i * 0.2) + 's' }"
+        >
+          <div class="feature-icon" [style.color]="feature.color">
+            <i [class]="feature.icon"></i>
+          </div>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+          
+          <!-- Decorative element -->
+          <div class="feature-decoration" [style.background]="feature.color"></div>
+        </div>
+      </div>
+
+      <!-- Company Statistics -->
+      <div class="stats-section" [@slideInUp]="{ delay: '0.8s' }">
+        <div class="stats-header">
+          <h3 class="stats-title">Our Impact in Numbers</h3>
+          <p class="stats-subtitle">Building success through dedication and innovation</p>
+        </div>
+        
+        <div class="stats-grid">
+          <div 
+            *ngFor="let stat of stats; let i = index; trackBy: trackByIndex"
+            class="stat-card glass-effect"
+            [@slideInUp]="{ delay: (1.0 + i * 0.1) + 's' }"
+          >
+            <div class="stat-icon">
+              <i [class]="stat.icon"></i>
+            </div>
+            <div class="stat-number" [@counterAnimation]="stat.number">
+              {{ getFormattedStat(stat) }}
+            </div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Timeline -->
+      <div class="timeline-section" [@slideInUp]="{ delay: '1.2s' }">
+        <div class="timeline-header">
+          <h3 class="timeline-title">Our Journey</h3>
+          <p class="timeline-subtitle">Milestones that shaped our success</p>
+        </div>
+
+        <div class="timeline">
+          <div 
+            *ngFor="let milestone of timeline; let i = index; trackBy: trackByYear"
+            class="timeline-item"
+            [class.left]="i % 2 === 0"
+            [class.right]="i % 2 === 1"
+            [@slideInUp]="{ delay: (1.4 + i * 0.1) + 's' }"
+          >
+            <div class="timeline-content glass-effect">
+              <div class="timeline-icon" [style.background]="features[i % features.length].color">
+                <i [class]="milestone.icon"></i>
+              </div>
+              <div class="timeline-year">{{ milestone.year }}</div>
+              <h4 class="timeline-milestone-title">{{ milestone.title }}</h4>
+              <p class="timeline-description">{{ milestone.description }}</p>
+            </div>
+            
+            <!-- Timeline connector -->
+            <div class="timeline-connector" *ngIf="i < timeline.length - 1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission Statement -->
+      <div class="mission-section" [@slideInUp]="{ delay: '2.0s' }">
+        <div class="mission-content glass-effect card">
+          <div class="mission-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3 class="mission-title">Our Mission</h3>
+          <p class="mission-text">
+            To pioneer software solutions that transcend conventional boundaries, empowering businesses 
+            to achieve their digital transformation goals through innovative technology, exceptional user 
+            experiences, and unwavering commitment to excellence.
+          </p>
+          <div class="mission-values">
+            <span class="value-tag" *ngFor="let value of ['Innovation', 'Excellence', 'Integrity', 'Collaboration']">
+              {{ value }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

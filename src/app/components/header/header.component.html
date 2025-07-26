@@ -1,0 +1,48 @@
+<nav class="navbar glass-effect" [class.scrolled]="isScrolled">
+  <div class="container">
+    <div class="nav-wrapper">
+      <!-- Logo -->
+      <div class="logo" (click)="scrollToSection('home')">
+        <div class="logo-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <span class="logo-text">SyntaxEra</span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="nav-links">
+        <a 
+          *ngFor="let item of navigationItems" 
+          class="nav-link"
+          [class.active]="isActiveSection(item.id)"
+          (click)="scrollToSection(item.id)"
+          [attr.aria-current]="isActiveSection(item.id) ? 'page' : null"
+        >
+          {{ item.label }}
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        class="mobile-menu-btn"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-label="Toggle navigation menu"
+      >
+        <i class="fas" [class.fa-bars]="!mobileMenuOpen" [class.fa-times]="mobileMenuOpen"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" [class.open]="mobileMenuOpen" [@slideDown]="mobileMenuOpen ? 'open' : 'closed'">
+      <a 
+        *ngFor="let item of navigationItems" 
+        class="nav-link"
+        [class.active]="isActiveSection(item.id)"
+        (click)="scrollToSection(item.id)"
+      >
+        {{ item.label }}
+      </a>
+    </div>
+  </div>
+</nav>

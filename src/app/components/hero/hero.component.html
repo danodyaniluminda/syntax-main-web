@@ -1,0 +1,71 @@
+<section class="hero code-bg">
+  <!-- Animated Code Background -->
+  <div class="hero-code-bg">
+    <div 
+      *ngFor="let snippet of codeSnippets; let i = index" 
+      class="floating-code"
+      [style.color]="snippet.color"
+      [style.animation-delay]="snippet.delay + 's'"
+    >
+      <div class="typing-animation">{{ snippet.text }}</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero-content-wrapper">
+      <!-- Left Content -->
+      <div class="hero-content animate-slide-up">
+        <h1 class="hero-title text-gradient" [@fadeInUp]>
+          SyntaxEra
+        </h1>
+        <p class="hero-subtitle" [@fadeInUp]="{ delay: '0.2s' }">
+          Beyond the Barracks
+        </p>
+        <p class="hero-description" [@fadeInUp]="{ delay: '0.4s' }">
+          Pioneering software solutions that transcend conventional boundaries. 
+          We craft digital experiences that drive innovation and transform businesses.
+        </p>
+        <div class="hero-buttons" [@fadeInUp]="{ delay: '0.6s' }">
+          <button 
+            class="btn btn-primary"
+            (click)="onGetStarted()"
+            [@buttonHover]
+          >
+            Get Started
+          </button>
+          <button 
+            class="btn btn-outline"
+            (click)="onViewPortfolio()"
+            [@buttonHover]
+          >
+            View Portfolio
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Content - Code Demo -->
+      <div class="hero-demo animate-float" [@fadeInUp]="{ delay: '0.8s' }">
+        <div class="glass-effect card">
+          <!-- Status Indicator -->
+          <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span class="status-text">System Status: Online</span>
+          </div>
+          
+          <!-- Code Example -->
+          <div class="code-block">
+            <div 
+              *ngFor="let line of codeExample.lines; let i = index" 
+              class="code-line"
+              [style.color]="line.color"
+              [style.margin-left.rem]="line.indent || 0"
+              [@typewriter]="{ delay: (i * 0.3) + 's' }"
+            >
+              {{ line.text }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,301 @@
+// ===== RESPONSIVE BREAKPOINT MIXINS =====
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @if $breakpoint-value != 0 {
+      @media (min-width: $breakpoint-value) {
+        @content;
+      }
+    } @else {
+      @content;
+    }
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (max-width: ($breakpoint-value - 1px)) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-between($lower, $upper) {
+  @if map-has-key($breakpoints, $lower) and map-has-key($breakpoints, $upper) {
+    $lower-breakpoint: map-get($breakpoints, $lower);
+    $upper-breakpoint: map-get($breakpoints, $upper);
+    
+    @media (min-width: $lower-breakpoint) and (max-width: ($upper-breakpoint - 1px)) {
+      @content;
+    }
+  }
+}
+
+// ===== LAYOUT MIXINS =====
+@mixin container() {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  
+  @include respond-below(md) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@mixin flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between() {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin grid-center() {
+  display: grid;
+  place-items: center;
+}
+
+// ===== VISUAL EFFECT MIXINS =====
+@mixin glass-effect() {
+  background: var(--glass-background, $glass-background);
+  backdrop-filter: $glass-backdrop-filter;
+  -webkit-backdrop-filter: $glass-backdrop-filter;
+  border: 1px solid var(--glass-border, $glass-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@mixin text-gradient($from: var(--primary), $to: var(--secondary)) {
+  background: linear-gradient(135deg, $from, $to);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+@mixin button-gradient($from: var(--primary), $to: var(--secondary)) {
+  background: linear-gradient(135deg, $from, $to);
+  border: none;
+  color: white;
+  transition: var(--transition);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin hover-glow($color: var(--primary)) {
+  transition: var(--transition);
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    transform: translateY(-5px);
+  }
+}
+
+@mixin card-base() {
+  @include glass-effect();
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  transition: var(--transition);
+}
+
+@mixin section-spacing() {
+  padding: var(--space-20) 0;
+  
+  @include respond-below(md) {
+    padding: var(--space-12) 0;
+  }
+}
+
+// ===== TYPOGRAPHY MIXINS =====
+@mixin font-size($size) {
+  @if map-has-key($font-sizes, $size) {
+    font-size: map-get($font-sizes, $size);
+  }
+}
+
+@mixin heading-base() {
+  font-weight: map-get($font-weights, bold);
+  line-height: map-get($line-heights, tight);
+  color: white;
+}
+
+@mixin section-title() {
+  @include heading-base();
+  @include font-size('5xl');
+  @include text-gradient();
+  text-align: center;
+  margin-bottom: var(--space-6);
+  
+  @include respond-below(md) {
+    @include font-size('4xl');
+  }
+  
+  @include respond-below(sm) {
+    @include font-size('3xl');
+  }
+}
+
+@mixin section-subtitle() {
+  @include font-size('xl');
+  text-align: center;
+  color: var(--gray-300);
+  max-width: 600px;
+  margin: 0 auto var(--space-12);
+  line-height: map-get($line-heights, relaxed);
+}
+
+// ===== ANIMATION MIXINS =====
+@mixin fade-in-up($duration: $animation-duration-base, $delay: 0s) {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp $duration ease-out $delay forwards;
+}
+
+@mixin slide-in-left($duration: $animation-duration-base, $delay: 0s) {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideInLeft $duration ease-out $delay forwards;
+}
+
+@mixin scale-in($duration: $animation-duration-fast, $delay: 0s) {
+  opacity: 0;
+  transform: scale(0.8);
+  animation: scaleIn $duration ease-out $delay forwards;
+}
+
+@mixin pulse($color: var(--primary)) {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@mixin float($duration: 6s) {
+  animation: float $duration ease-in-out infinite;
+}
+
+// ===== FORM MIXINS =====
+@mixin form-input-base() {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--gray-800);
+  border: 1px solid var(--gray-600);
+  border-radius: var(--radius);
+  color: white;
+  font-size: map-get($font-sizes, base);
+  transition: var(--transition);
+  
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+  
+  &.error {
+    border-color: var(--error);
+  }
+  
+  &::placeholder {
+    color: var(--gray-400);
+  }
+}
+
+@mixin form-label() {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: map-get($font-weights, medium);
+  color: var(--gray-300);
+  font-size: map-get($font-sizes, sm);
+}
+
+@mixin form-error() {
+  color: var(--error);
+  font-size: map-get($font-sizes, sm);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+// ===== UTILITY MIXINS =====
+@mixin visually-hidden() {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ===== PRINT MIXINS =====
+@mixin print-only() {
+  @media print {
+    @content;
+  }
+}
+
+@mixin screen-only() {
+  @media screen {
+    @content;
+  }
+}
+
+// ===== DARK MODE MIXINS =====
+@mixin dark-mode() {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+@mixin light-mode() {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+}
+
+// ===== ACCESSIBILITY MIXINS =====
+@mixin focus-visible() {
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+@mixin reduce-motion() {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

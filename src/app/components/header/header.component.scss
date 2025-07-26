@@ -1,0 +1,181 @@
+@import '../shared/styles/variables';
+@import '../shared/styles/mixins';
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  &.scrolled {
+    background: rgba(17, 24, 39, 0.9);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.logo-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+  color: #d1d5db;
+  text-decoration: none;
+  transition: var(--transition);
+  font-weight: 500;
+  cursor: pointer;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background-color: var(--primary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  &:hover,
+  &.active {
+    color: var(--primary);
+    
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: var(--transition);
+  
+  &:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(139, 92, 246, 0.2);
+  margin-top: 1rem;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+  
+  &.open {
+    max-height: 300px;
+  }
+  
+  @media (max-width: 768px) {
+    display: flex;
+  }
+  
+  .nav-link {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    
+    &:hover,
+    &.active {
+      background: rgba(139, 92, 246, 0.1);
+      transform: translateX(10px);
+    }
+    
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:host ::ng-deep .mobile-menu.open .nav-link {
+  animation: slideDown 0.3s ease forwards;
+  
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
