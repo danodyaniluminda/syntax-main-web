@@ -31,8 +31,9 @@
 .hero-content-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
+  gap: 3rem;
   align-items: center;
+  min-height: 70vh;
   
   @include respond-below(lg) {
     gap: var(--space-8);
@@ -45,8 +46,8 @@
   }
 }
 
-// ===== HERO CONTENT (LEFT SIDE) =====
-.hero-content {
+// ===== HERO LEFT (LEFT SIDE) =====
+.hero-left {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
@@ -58,7 +59,7 @@
 }
 
 .hero-title {
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(3rem, 1vw, 2rem);
   font-weight: map-get($font-weights, bold);
   line-height: map-get($line-heights, tight);
   margin: 0;
@@ -73,9 +74,9 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: map-get($font-weights, light);
-  color: var(--gray-300);
+  font-size: clamp(1.5rem, 4vw, 1rem);
+  // font-weight: map-get($font-weights, light);
+  color: var(--success);
   margin: 0;
   
   @include respond-below(lg) {
@@ -89,7 +90,7 @@
 
 .hero-description {
   font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--gray-400);
+  color: var(--gray-50);
   line-height: map-get($line-heights, relaxed);
   max-width: 500px;
   margin: 0;
@@ -117,13 +118,13 @@
   }
 }
 
-// ===== HERO DEMO (RIGHT SIDE) =====
-.hero-demo {
+// ===== HERO RIGHT (RIGHT SIDE) =====
+.hero-right {
   position: relative;
   
   @include respond-below(md) {
     order: 1;
-    max-width: 400px;
+    max-width: 600px;
     margin: 0 auto;
   }
 }
@@ -187,7 +188,6 @@
     padding: var(--space-4);
   }
   
-  // Code block decoration
   &::before {
     content: '';
     position: absolute;
@@ -198,7 +198,6 @@
     background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6, #ec4899);
   }
   
-  // Terminal dots
   &::after {
     content: '';
     position: absolute;
@@ -268,8 +267,6 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
-  
-  // Floating animation
   animation: float 6s ease-in-out infinite;
   
   @include respond-below(md) {
@@ -277,7 +274,6 @@
     padding: var(--space-1) var(--space-2);
   }
   
-  // Position each floating code element
   &:nth-child(1) {
     top: 15%;
     left: 5%;
@@ -302,7 +298,6 @@
     animation-delay: 0.5s;
   }
   
-  // Hide some on mobile
   @include respond-below(sm) {
     &:nth-child(3),
     &:nth-child(4) {
@@ -376,7 +371,6 @@
     padding: var(--space-4) var(--space-6);
   }
   
-  // Ripple effect
   &::before {
     content: '';
     position: absolute;
@@ -479,7 +473,7 @@
     padding-top: 50px;
   }
   
-  .hero-content {
+  .hero-left {
     gap: var(--space-4);
   }
   
@@ -490,6 +484,22 @@
   
   .status-indicator {
     justify-content: center;
+  }
+  
+  .hero-content-wrapper {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    text-align: center;
+  }
+  
+  .hero-right {
+    order: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .hero-left {
+    order: 2;
   }
 }
 
@@ -581,4 +591,29 @@
     background: rgba(0, 0, 0, 0.6);
     border-color: rgba(255, 255, 255, 0.2);
   }
+}
+
+// === Syntax Highlighting for code spans ===
+.keyword {
+  color: #569CD6;
+  font-weight: 600;
+}
+
+.variable1 {
+  color: #9CDCFE;
+}
+.variable2 {
+  color: #ff00a6;
+}
+
+.operator {
+  color: #D4D4D4;
+}
+
+.function {
+  color: #C586C0;
+}
+
+.brace {
+  color: #D4D4D4;
 }
